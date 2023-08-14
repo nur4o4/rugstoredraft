@@ -1,5 +1,5 @@
 # rugstoredraft
-The programming from my cs course, will be upgraded throughout the summer.
-The main file and txt file were both done in replit (I know, I know) in java and I'm working on moving the code to start fresh. The program for the course required a
-txt file, however it's more practical to store all the data in an arraylist. So the first step is to edit the program to send and recieve data from an arraylist, and 
-scrap the txt file to make it more practical to be used in the real world!
+"main" is code from my grade 12 CS course final project, which I upgraded throughout the summer.
+The program made for my final project is for the store I work in part-time, and I edited the code to work on a larger scale and have heavier error-checking.
+"FINALbackend" is the final working code, that I am currently able to run on our desktop at work through the windows CMD and a txt file for data.
+I'm looking to learn more about front end, and translate the Java code into Javascript to build a website in HTML with it to make the program more user friendly!
