@@ -1,6 +1,6 @@
-a
-20
-Shelby
+a //rack letter
+20 //rack position
+Shelby //rug name
 b
 35
 Mertos
