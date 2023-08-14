@@ -1,0 +1,199 @@
+//final finished back-end code
+import java.util.*; //import for arraylist
+import java.util.Scanner; //import for user input
+import java.io.FileWriter;
+import java.io.*;
+
+
+class Main {
+  public static ArrayList<String> main = new ArrayList<String>();
+  public static ArrayList<String> rugNames = new ArrayList<String>();
+
+  public static void main(String[] args) {
+      Scanner keyedInput = new Scanner(System.in);// for user entry
+
+      BufferedReader br = null;
+    try {
+      br = new BufferedReader(new FileReader("data.txt"));
+      String word;
+      while ((word = br.readLine()) != null) {
+        main.add(word.toLowerCase());//reading in all lowercase
+      } //adding txt file into arrayList
+    } catch (IOException e) {
+      e.printStackTrace();
+    } finally {
+      try {
+        br.close();
+      } catch (IOException ex) {
+        ex.printStackTrace();
+      }
+    }
+
+    for (int i = 0; i < main.size(); i += 3) {
+      rugNames.add(String.valueOf(main.get(i)));
+    }
+    
+      int i = 0;
+        while (i == 0) {
+        try{
+        System.out.println("\nEnter a menu item number:\n1. Search for a rug name\n2. Enter a rug into the system\n3. Remove a rug from the system\n4. Exit");
+        String menuChoice = keyedInput.nextLine();
+        if(Integer.parseInt(menuChoice)==2){
+          menu2();
+        }
+
+        if(Integer.parseInt(menuChoice)==1){
+          menu1();
+        }
+
+        if(Integer.parseInt(menuChoice)==3){
+          menu3();
+        }
+          
+        if(Integer.parseInt(menuChoice)==4){
+          System.out.println("Exiting. Have a good one!");
+          i+=1;
+        }
+        if(Integer.parseInt(menuChoice)!=4&&Integer.parseInt(menuChoice)!=3&&Integer.parseInt(menuChoice)!=2&&Integer.parseInt(menuChoice)!=1){
+          System.out.println("Please select menu items 1-4.");
+        }
+        }
+        catch(Exception e) {System.out.println("Not a menu item, please try again.");}
+        }
+      
+  }
+
+  public static void menu3(){
+  Scanner keyedInput = new Scanner(System.in);// for user entry
+  System.out.print("Enter the following information of the rug you're deleting\nName: ");
+  String rugNameGone = keyedInput.nextLine().toLowerCase();
+  System.out.print("Size: ");
+  String rugSizeGone = keyedInput.nextLine().toLowerCase();
+  System.out.print("Specific location if applicable (ex. rack A, alcove B, etc.): ");
+  String rugRackGone = keyedInput.nextLine().toLowerCase();
+int found = 0;
+  for (int e = 0; e < main.size(); e += 1){
+    if(main.get(e).equals(rugNameGone)&&main.get(e+1).equals(rugSizeGone)&&main.get(e+2).equals(rugRackGone)){
+      main.remove(e);
+      main.remove(e);
+      main.remove(e);
+      System.out.println("Removed.");
+      found+=1;
+      menu4();
+      rugNames.clear();
+      for(int o = 0; o<main.size(); o+=3){
+        rugNames.add(main.get(o));
+      }
+    }
+    
+  }
+  if(found==0){System.out.println("Rug not found.");}
+
+}
+  
+  public static void menu4(){
+    try {
+    FileWriter writer = new FileWriter("data.txt"); 
+  for(String str: main) {
+  writer.write(str + System.lineSeparator());
+}
+writer.close();}
+    catch (IOException e) {
+  e.printStackTrace();
+}
+    System.out.println("Changes saved.");
+  }
+
+  public static void menu2(){
+    Scanner keyedInput = new Scanner(System.in);// for user entry
+    System.out.print("Enter rug name: ");
+    String rugName = keyedInput.nextLine().toLowerCase();
+    System.out.print("Enter rug size: ");
+    String rugSize = keyedInput.nextLine().toLowerCase();
+    System.out.print("Enter specific location if applicable (ex. rack A, alcove B, etc.): ");
+    String rugPlace = keyedInput.nextLine().toLowerCase();
+    main.add(rugName);
+    main.add(rugSize);
+    main.add(rugPlace);
+    
+    if(rugPlace.equals("")){
+    System.out.println(rugName.toUpperCase()+ " in " + rugSize.toUpperCase()+" added.");}
+    else{
+    System.out.println(rugName.toUpperCase()+ " in " + rugSize.toUpperCase()+" added to " + rugPlace.toUpperCase());}
+    menu4();
+
+    rugNames.clear();
+    for(int k = 0; k<main.size();k+=3){
+      rugNames.add(main.get(k));
+    }
+
+/*
+    for (int i = 0; i < main.size(); i += 3) {
+      rugNames.add(String.valueOf(main.get(i)));
+    }
+    
+    for (int k = 0; k < main.size(); k += 1) {
+      System.out.println(main.get(k));
+    }
+    for (int j = 0; j < rugNames.size(); j += 1) {
+      System.out.println(rugNames.get(j));
+    }*/
+    
+}
+  
+  public static void menu1(){
+  
+    
+    Scanner keyedInput = new Scanner(System.in);// for user entry
+    System.out.print("Enter a rug name to search for: ");
+    String rugSearch = keyedInput.nextLine().toLowerCase();
+    int founded = 0;
+    for (int e = 0; e < rugNames.size(); e += 1){
+    if(rugNames.get(e).equals(rugSearch)){
+      int place = rugNames.indexOf(rugSearch);
+      int realPlace = (e*3);
+      if(main.get(realPlace+2).equals("")){System.out.println("Found! "+ rugNames.get(e).toUpperCase() + " is up in "+ main.get(realPlace+1));}
+      else{
+      System.out.println("Found! "+ rugNames.get(e).toUpperCase() + " is in " + main.get(realPlace+1) + " at " + main.get(realPlace+2).toUpperCase());}
+      founded+=1;
+    }}
+    if(founded==0){
+      System.out.println("Not found.");
+    }
+
+    
+    /*String[] arr = rugNames.toArray(new String[0]);//turning rugname arraylist into array arr
+    Arrays.sort(arr);//sorting alphabeticallyt
+    int result = binarySearch(arr, rugSearch);
+    int place = main.indexOf(rugSearch);
+    if (result == -1) {//if not found
+      System.out.println("Not found. Most likely in the back or inventory error.");
+    } else {//if found
+      
+      System.out.println("Found! "+ arr[result].toUpperCase() + " is in " + main.get(place+1) + " on rack " + main.get(place+2).toUpperCase()); }*/
+
+    
+    }
+    
+  public static int binarySearch(String[] arr, String x) {
+    int l = 0, r = arr.length - 1;
+    //loop to implement Binary Search
+    while (l <= r) {
+      //calculatiing mid
+      int m = l + (r - l) / 2;
+      int res = x.compareTo(arr[m]);
+      //check if x is present at mid
+      if (res == 0)
+        return m;
+      //if x greater, ignore left half
+      if (res > 0)
+        l = m + 1;
+      //if x is smaller, ignore right half
+      else
+        r = m - 1;
+    }
+
+    return -1;
+  }
+
+}
